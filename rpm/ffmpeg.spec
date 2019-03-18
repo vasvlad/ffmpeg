@@ -1,12 +1,16 @@
 Name:           ffmpeg
-Version:        3.2.4
+Version:        4.1.1
 Release:        1
 Summary:        FFmpeg video encoding and decoding library
 Group:          Productivity/Multimedia/Video/Editors and Convertors
 Url:            http://ffmpeg.org/
 Source:         http://ffmpeg.org/releases/%{name}-%{version}.tar.bz2
+Source1:        enable_decoders
+Source2:        enable_encoders
 License:        LGPLv2.1+
+BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(speex)
+BuildRequires:  pkgconfig(zlib)
 Conflicts:      libav
 %ifarch i486 x86_64
 BuildRequires:  yasm
@@ -37,32 +41,15 @@ Development tools for FFmpeg - a complete, cross-platform solution to record, co
 
 %build
 
-./configure --prefix=/usr --libdir=%{_libdir} --disable-debug --enable-shared --enable-pic \
-  --disable-static --disable-doc --disable-muxers --disable-demuxers --disable-protocols \
-  --disable-indevs --disable-outdevs --disable-avdevice --disable-network \
-  --disable-lsp --disable-hwaccels --disable-encoders --disable-decoders --disable-bsfs \
-  --enable-protocol=file --enable-fft --enable-decoder=aac --enable-decoder=aac_latm \
-  --enable-decoder=vorbis --enable-decoder=theora --enable-decoder=flac \
-  --enable-encoder=aac --enable-demuxer=aac --enable-demuxer=avi --enable-demuxer=flac \
-  --enable-demuxer=h264 --enable-demuxer=m4v --enable-demuxer=mov --enable-demuxer=ogg \
-  --enable-demuxer=mpegts --enable-demuxer=mpegvideo --enable-demuxer=matroska \
-  --enable-demuxer=wav --enable-decoder=h264 --enable-decoder=mpeg4 --enable-decoder=mp3 \
-  --enable-demuxer=aiff --enable-demuxer=flv --enable-demuxer=mjpeg \
-  --enable-decoder=pcm_u8 --enable-decoder=pcm_u32le --enable-decoder=pcm_u32be \
-  --enable-decoder=pcm_u24le --enable-decoder=pcm_u24be --enable-decoder=pcm_u16le \
-  --enable-decoder=pcm_u16be --enable-decoder=pcm_s8 --enable-decoder=pcm_s32le \
-  --enable-decoder=pcm_s32be --enable-decoder=pcm_s24le --enable-decoder=pcm_s24be \
-  --enable-decoder=pcm_s16le --enable-decoder=pcm_s16be --enable-decoder=pcm_f64le \
-  --enable-decoder=pcm_f64be --enable-decoder=pcm_f32le --enable-decoder=pcm_f32be \
-  --enable-demuxer=pcm_u32be --enable-demuxer=pcm_u32le --enable-demuxer=pcm_u8 \
-  --enable-demuxer=pcm_alaw --enable-demuxer=pcm_f32be --enable-demuxer=pcm_f32le \
-  --enable-demuxer=pcm_f64be --enable-demuxer=pcm_f64le --enable-demuxer=pcm_s16be \
-  --enable-demuxer=pcm_s16le --enable-demuxer=pcm_s24be --enable-demuxer=pcm_s24le \
-  --enable-demuxer=pcm_s32be --enable-demuxer=pcm_s32le --enable-demuxer=pcm_s8 \
-  --enable-demuxer=pcm_u16be --enable-demuxer=pcm_u16le --enable-demuxer=pcm_u24be \
-  --enable-demuxer=pcm_u24le --enable-decoder=mjpeg --enable-decoder=vp8 --enable-decoder=vp9 \
-  --enable-libspeex --enable-decoder=opus
+# We have an older sed that doesn't recognize the new -E switch. Use the old one
+sed -i 's/sed -E/sed -r/g' ./configure
 
+./configure --prefix=/usr --libdir=%{_libdir} --disable-debug --enable-shared --enable-pic \
+  --disable-static --disable-doc --enable-muxers --enable-demuxers --enable-protocols \
+  --disable-indevs --disable-outdevs --disable-bsfs --enable-network --disable-hwaccels \
+  --enable-libpulse --enable-libspeex  --disable-encoders --disable-decoders \
+  --enable-encoder="$(perl -pe 's{^(\w*).*}{$1,}gs' <%_sourcedir/enable_encoders)" \
+  --enable-decoder="$(perl -pe 's{^(\w*).*}{$1,}gs' <%_sourcedir/enable_decoders)" \
 
 make %{?_smp_mflags}
 
@@ -82,21 +69,150 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %{_datadir}/ffmpeg/*.ffpreset
 %{_datadir}/ffmpeg/ffprobe.xsd
-%{_libdir}/*.so.*
+%{_libdir}/libavcodec.so.*
+%{_libdir}/libavdevice.so.*
+%{_libdir}/libavfilter.so.*
+%{_libdir}/libavformat.so.*
+%{_libdir}/libavutil.so.*
+%{_libdir}/libswresample.so.*
+%{_libdir}/libswscale.so.*
 
 %files devel
 %defattr(-,root,root)
-%{_libdir}/*.so
-%{_includedir}/libavcodec/*.h
-%{_includedir}/libavfilter/*.h
-%{_includedir}/libavformat/*.h
-%{_includedir}/libavutil/*.h
-%{_includedir}/libswscale/*.h
-%{_includedir}/libswresample/*.h
-%{_libdir}/pkgconfig/*.pc
+%{_libdir}/libavcodec.so
+%{_libdir}/libavdevice.so
+%{_libdir}/libavfilter.so
+%{_libdir}/libavformat.so
+%{_libdir}/libavutil.so
+%{_libdir}/libswresample.so
+%{_libdir}/libswscale.so
+%{_libdir}/pkgconfig/libavcodec.pc
+%{_libdir}/pkgconfig/libavdevice.pc
+%{_libdir}/pkgconfig/libavfilter.pc
+%{_libdir}/pkgconfig/libavformat.pc
+%{_libdir}/pkgconfig/libavutil.pc
+%{_libdir}/pkgconfig/libswresample.pc
+%{_libdir}/pkgconfig/libswscale.pc
+%dir %{_includedir}/libavcodec
+%{_includedir}/libavcodec/ac3_parser.h
+%{_includedir}/libavcodec/adts_parser.h
+%{_includedir}/libavcodec/avcodec.h
+%{_includedir}/libavcodec/avdct.h
+%{_includedir}/libavcodec/avfft.h
+%{_includedir}/libavcodec/d3d11va.h
+%{_includedir}/libavcodec/dirac.h
+%{_includedir}/libavcodec/dv_profile.h
+%{_includedir}/libavcodec/dxva2.h
+%{_includedir}/libavcodec/jni.h
+%{_includedir}/libavcodec/mediacodec.h
+%{_includedir}/libavcodec/qsv.h
+%{_includedir}/libavcodec/vaapi.h
+%{_includedir}/libavcodec/vdpau.h
+%{_includedir}/libavcodec/version.h
+%{_includedir}/libavcodec/videotoolbox.h
+%{_includedir}/libavcodec/vorbis_parser.h
+%{_includedir}/libavcodec/xvmc.h
+%dir %{_includedir}/libavdevice
+%{_includedir}/libavdevice/avdevice.h
+%{_includedir}/libavdevice/version.h
+%dir %{_includedir}/libavfilter
+%{_includedir}/libavfilter/avfilter.h
+%{_includedir}/libavfilter/buffersink.h
+%{_includedir}/libavfilter/buffersrc.h
+%{_includedir}/libavfilter/version.h
+%dir %{_includedir}/libavformat
+%{_includedir}/libavformat/avformat.h
+%{_includedir}/libavformat/avio.h
+%{_includedir}/libavformat/version.h
+%dir %{_includedir}/libavutil
+%{_includedir}/libavutil/adler32.h
+%{_includedir}/libavutil/aes.h
+%{_includedir}/libavutil/aes_ctr.h
+%{_includedir}/libavutil/attributes.h
+%{_includedir}/libavutil/audio_fifo.h
+%{_includedir}/libavutil/avassert.h
+%{_includedir}/libavutil/avconfig.h
+%{_includedir}/libavutil/avstring.h
+%{_includedir}/libavutil/avutil.h
+%{_includedir}/libavutil/base64.h
+%{_includedir}/libavutil/blowfish.h
+%{_includedir}/libavutil/bprint.h
+%{_includedir}/libavutil/bswap.h
+%{_includedir}/libavutil/buffer.h
+%{_includedir}/libavutil/camellia.h
+%{_includedir}/libavutil/cast5.h
+%{_includedir}/libavutil/channel_layout.h
+%{_includedir}/libavutil/common.h
+%{_includedir}/libavutil/cpu.h
+%{_includedir}/libavutil/crc.h
+%{_includedir}/libavutil/des.h
+%{_includedir}/libavutil/dict.h
+%{_includedir}/libavutil/display.h
+%{_includedir}/libavutil/downmix_info.h
+%{_includedir}/libavutil/encryption_info.h
+%{_includedir}/libavutil/hwcontext_mediacodec.h
+%{_includedir}/libavutil/error.h
+%{_includedir}/libavutil/eval.h
+%{_includedir}/libavutil/ffversion.h
+%{_includedir}/libavutil/fifo.h
+%{_includedir}/libavutil/file.h
+%{_includedir}/libavutil/frame.h
+%{_includedir}/libavutil/hash.h
+%{_includedir}/libavutil/hmac.h
+%{_includedir}/libavutil/hwcontext.h
+%{_includedir}/libavutil/hwcontext_cuda.h
+%{_includedir}/libavutil/hwcontext_d3d11va.h
+%{_includedir}/libavutil/hwcontext_drm.h
+%{_includedir}/libavutil/hwcontext_dxva2.h
+%{_includedir}/libavutil/hwcontext_qsv.h
+%{_includedir}/libavutil/hwcontext_vaapi.h
+%{_includedir}/libavutil/hwcontext_vdpau.h
+%{_includedir}/libavutil/hwcontext_videotoolbox.h
+%{_includedir}/libavutil/imgutils.h
+%{_includedir}/libavutil/intfloat.h
+%{_includedir}/libavutil/intreadwrite.h
+%{_includedir}/libavutil/lfg.h
+%{_includedir}/libavutil/log.h
+%{_includedir}/libavutil/lzo.h
+%{_includedir}/libavutil/macros.h
+%{_includedir}/libavutil/mastering_display_metadata.h
+%{_includedir}/libavutil/mathematics.h
+%{_includedir}/libavutil/md5.h
+%{_includedir}/libavutil/mem.h
+%{_includedir}/libavutil/motion_vector.h
+%{_includedir}/libavutil/murmur3.h
+%{_includedir}/libavutil/opt.h
+%{_includedir}/libavutil/parseutils.h
+%{_includedir}/libavutil/pixdesc.h
+%{_includedir}/libavutil/pixelutils.h
+%{_includedir}/libavutil/pixfmt.h
+%{_includedir}/libavutil/random_seed.h
+%{_includedir}/libavutil/rational.h
+%{_includedir}/libavutil/rc4.h
+%{_includedir}/libavutil/replaygain.h
+%{_includedir}/libavutil/ripemd.h
+%{_includedir}/libavutil/samplefmt.h
+%{_includedir}/libavutil/sha.h
+%{_includedir}/libavutil/sha512.h
+%{_includedir}/libavutil/spherical.h
+%{_includedir}/libavutil/stereo3d.h
+%{_includedir}/libavutil/tea.h
+%{_includedir}/libavutil/threadmessage.h
+%{_includedir}/libavutil/time.h
+%{_includedir}/libavutil/timecode.h
+%{_includedir}/libavutil/timestamp.h
+%{_includedir}/libavutil/tree.h
+%{_includedir}/libavutil/twofish.h
+%{_includedir}/libavutil/version.h
+%{_includedir}/libavutil/xtea.h
+%dir %{_includedir}/libswresample
+%{_includedir}/libswresample/swresample.h
+%{_includedir}/libswresample/version.h
+%dir %{_includedir}/libswscale
+%{_includedir}/libswscale/swscale.h
+%{_includedir}/libswscale/version.h
 
 %files tools
 %defattr(-,root,root)
 %{_bindir}/ffmpeg
 %{_bindir}/ffprobe
-#%{_bindir}/ffserver
