@@ -7,7 +7,7 @@ Url:            http://ffmpeg.org/
 Source:         http://ffmpeg.org/releases/%{name}-%{version}.tar.bz2
 Source1:        enable_decoders
 Source2:        enable_encoders
-License:        LGPLv2.1+
+License:        LGPLv2+
 BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(speex)
 BuildRequires:  pkgconfig(zlib)
