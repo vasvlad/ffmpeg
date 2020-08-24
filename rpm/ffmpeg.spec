@@ -17,7 +17,7 @@ BuildRequires:  pkgconfig(vorbis)
 BuildRequires:  pkgconfig(vpx)
 BuildRequires:  pkgconfig(zlib)
 Conflicts:      libav
-%ifarch i486 x86_64
+%ifarch %{ix86} x86_64
 BuildRequires:  yasm
 %endif
 
