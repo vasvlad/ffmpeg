@@ -1,10 +1,9 @@
 Name:           ffmpeg
-Version:        4.2.2
+Version:        4.3.1
 Release:        1
 Summary:        FFmpeg video encoding and decoding library
-Group:          Productivity/Multimedia/Video/Editors and Convertors
 Url:            http://ffmpeg.org/
-Source:         http://ffmpeg.org/releases/%{name}-%{version}.tar.bz2
+Source:         %{name}-%{version}.tar.bz2
 Source1:        enable_decoders
 Source2:        enable_encoders
 License:        LGPLv2+
@@ -22,7 +21,7 @@ BuildRequires:  yasm
 %endif
 
 %description
-FFmpeg: a complete, cross-platform solution to record, convert and stream audio and video. 
+FFmpeg: a complete, cross-platform solution to record, convert and stream audio and video.
 
 %package devel
 Summary:        FFmpeg development package
@@ -31,7 +30,7 @@ Requires:       bzip2-devel
 Conflicts:      libav-devel
 
 %description devel
-Development headers and libraries for FFmpeg - a complete, cross-platform solution to record, convert and stream audio and video. 
+Development headers and libraries for FFmpeg - a complete, cross-platform solution to record, convert and stream audio and video.
 
 %package tools
 Summary:        FFmpeg tools package
@@ -39,10 +38,10 @@ Requires:       %{name} = %{version}
 Conflicts:      libav-tools
 
 %description tools
-Development tools for FFmpeg - a complete, cross-platform solution to record, convert and stream audio and video. 
+Development tools for FFmpeg - a complete, cross-platform solution to record, convert and stream audio and video.
 
 %prep
-%setup -q -n %{name}-%{version}/upstream
+%autosetup -n %{name}-%{version}/upstream
 
 %build
 
@@ -54,10 +53,10 @@ sed -i 's/sed -E/sed -r/g' ./configure
   --disable-indevs --disable-outdevs --disable-bsfs --enable-network --disable-hwaccels \
   --enable-libopenjpeg --enable-libpulse --enable-libspeex --enable-libtheora \
   --enable-libvorbis --enable-libvpx --enable-libwebp --disable-encoders --disable-decoders \
-  --enable-encoder="$(perl -pe 's{^(\w*).*}{$1,}gs' <%_sourcedir/enable_encoders)" \
-  --enable-decoder="$(perl -pe 's{^(\w*).*}{$1,}gs' <%_sourcedir/enable_decoders)" \
+  --enable-encoder="$(perl -pe 's{^(\w*).*}{$1,}gs' <%{SOURCE2})" \
+  --enable-decoder="$(perl -pe 's{^(\w*).*}{$1,}gs' <%{SOURCE1})" \
 
-make %{?_smp_mflags}
+%make_build
 
 %install
 # Remove examples
@@ -67,9 +66,6 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/%{name}/examples
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
@@ -107,12 +103,18 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/libavcodec/avcodec.h
 %{_includedir}/libavcodec/avdct.h
 %{_includedir}/libavcodec/avfft.h
+%{_includedir}/libavcodec/bsf.h
+%{_includedir}/libavcodec/codec.h
+%{_includedir}/libavcodec/codec_desc.h
+%{_includedir}/libavcodec/codec_id.h
+%{_includedir}/libavcodec/codec_par.h
 %{_includedir}/libavcodec/d3d11va.h
 %{_includedir}/libavcodec/dirac.h
 %{_includedir}/libavcodec/dv_profile.h
 %{_includedir}/libavcodec/dxva2.h
 %{_includedir}/libavcodec/jni.h
 %{_includedir}/libavcodec/mediacodec.h
+%{_includedir}/libavcodec/packet.h
 %{_includedir}/libavcodec/qsv.h
 %{_includedir}/libavcodec/vaapi.h
 %{_includedir}/libavcodec/vdpau.h
@@ -156,6 +158,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/libavutil/des.h
 %{_includedir}/libavutil/dict.h
 %{_includedir}/libavutil/display.h
+%{_includedir}/libavutil/dovi_meta.h
 %{_includedir}/libavutil/downmix_info.h
 %{_includedir}/libavutil/encryption_info.h
 %{_includedir}/libavutil/hwcontext_mediacodec.h
@@ -173,10 +176,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/libavutil/hwcontext_d3d11va.h
 %{_includedir}/libavutil/hwcontext_drm.h
 %{_includedir}/libavutil/hwcontext_dxva2.h
+%{_includedir}/libavutil/hwcontext_opencl.h
 %{_includedir}/libavutil/hwcontext_qsv.h
 %{_includedir}/libavutil/hwcontext_vaapi.h
 %{_includedir}/libavutil/hwcontext_vdpau.h
 %{_includedir}/libavutil/hwcontext_videotoolbox.h
+%{_includedir}/libavutil/hwcontext_vulkan.h
 %{_includedir}/libavutil/imgutils.h
 %{_includedir}/libavutil/intfloat.h
 %{_includedir}/libavutil/intreadwrite.h
@@ -214,6 +219,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/libavutil/twofish.h
 %{_includedir}/libavutil/tx.h
 %{_includedir}/libavutil/version.h
+%{_includedir}/libavutil/video_enc_params.h
 %{_includedir}/libavutil/xtea.h
 %dir %{_includedir}/libswresample
 %{_includedir}/libswresample/swresample.h
