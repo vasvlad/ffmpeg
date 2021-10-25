@@ -1,5 +1,5 @@
 Name:           ffmpeg
-Version:        4.3.1
+Version:        4.4.1
 Release:        1
 Summary:        FFmpeg video encoding and decoding library
 Url:            http://ffmpeg.org/
@@ -167,6 +167,7 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/%{name}/examples
 %{_includedir}/libavutil/ffversion.h
 %{_includedir}/libavutil/fifo.h
 %{_includedir}/libavutil/file.h
+%{_includedir}/libavutil/film_grain_params.h
 %{_includedir}/libavutil/frame.h
 %{_includedir}/libavutil/hash.h
 %{_includedir}/libavutil/hdr_dynamic_metadata.h
