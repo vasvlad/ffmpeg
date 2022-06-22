@@ -1,6 +1,7 @@
 ## module name # reason for enablement in ffmpeg
 aac
 ac3
+alac # apple OSS - apache license
 ansi # trivial
 apng
 ass # trivial
