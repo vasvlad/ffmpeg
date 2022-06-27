@@ -1,5 +1,6 @@
 ## module name # reason for enablement in ffmpeg (usually there is another package that already got legal review)
 aac
+alac # apple OSS - apache license
 apng # libpng
 ass # trivial
 ayuv # trival
