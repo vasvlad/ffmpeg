@@ -3,7 +3,7 @@ aac
 ac3
 alac # apple OSS - apache license
 ansi # trivial
-apng
+apng # animated png
 ass # trivial
 ayuv # trivial
 bmp # trivial
@@ -17,11 +17,13 @@ gif # libpng
 gsm # libgsm
 huffyuv # trivial+zlib
 ilbc # ilbc
+jpeg2000 # openjpeg2
 libaom # libaom
 libaom_av1 # libaom
-libcelt # celt, opus
 libcodec2 # codec2
 libgsm # libgsm
+libilbc # ilbc
+libjxl # libjxl
 libopenjpeg # openjpeg
 libopus # opus
 libschroedinger # schroedinger
@@ -30,15 +32,15 @@ libvorbis # libvorbis
 libvpx_vp8 # libvpx
 libvpx_vp9 # libvpx
 mjpeg # mjpegtools
-mpeg1video
-mpeg2video
-#mpeg4
 mp1 # twolame/lame
 mp1float # twolame/lame
 mp2 # twolame
 mp2float # twolame
 mp3 # lame
 mp3float # lame
+mpeg1video
+mpeg2video
+#mpeg4
 opus # libopus
 pam # trivial
 pbm # trivial
@@ -73,6 +75,7 @@ pcx
 pgm # trivial
 pgmyuv # trivial
 pgssub # mkvtoolnix
+pgx
 png # libpng
 ppm # trivial
 rawvideo # trivial

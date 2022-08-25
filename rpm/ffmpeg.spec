@@ -1,5 +1,5 @@
 Name:           ffmpeg
-Version:        4.4.1
+Version:        5.1.1
 Release:        1
 Summary:        FFmpeg video encoding and decoding library
 Url:            http://ffmpeg.org/
@@ -109,6 +109,7 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/%{name}/examples
 %{_includedir}/libavcodec/codec_id.h
 %{_includedir}/libavcodec/codec_par.h
 %{_includedir}/libavcodec/d3d11va.h
+%{_includedir}/libavcodec/defs.h
 %{_includedir}/libavcodec/dirac.h
 %{_includedir}/libavcodec/dv_profile.h
 %{_includedir}/libavcodec/dxva2.h
@@ -116,24 +117,27 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/%{name}/examples
 %{_includedir}/libavcodec/mediacodec.h
 %{_includedir}/libavcodec/packet.h
 %{_includedir}/libavcodec/qsv.h
-%{_includedir}/libavcodec/vaapi.h
 %{_includedir}/libavcodec/vdpau.h
 %{_includedir}/libavcodec/version.h
+%{_includedir}/libavcodec/version_major.h
 %{_includedir}/libavcodec/videotoolbox.h
 %{_includedir}/libavcodec/vorbis_parser.h
 %{_includedir}/libavcodec/xvmc.h
 %dir %{_includedir}/libavdevice
 %{_includedir}/libavdevice/avdevice.h
 %{_includedir}/libavdevice/version.h
+%{_includedir}/libavdevice/version_major.h
 %dir %{_includedir}/libavfilter
 %{_includedir}/libavfilter/avfilter.h
 %{_includedir}/libavfilter/buffersink.h
 %{_includedir}/libavfilter/buffersrc.h
 %{_includedir}/libavfilter/version.h
+%{_includedir}/libavfilter/version_major.h
 %dir %{_includedir}/libavformat
 %{_includedir}/libavformat/avformat.h
 %{_includedir}/libavformat/avio.h
 %{_includedir}/libavformat/version.h
+%{_includedir}/libavformat/version_major.h
 %dir %{_includedir}/libavutil
 %{_includedir}/libavutil/adler32.h
 %{_includedir}/libavutil/aes.h
@@ -155,13 +159,14 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/%{name}/examples
 %{_includedir}/libavutil/common.h
 %{_includedir}/libavutil/cpu.h
 %{_includedir}/libavutil/crc.h
+%{_includedir}/libavutil/csp.h
+%{_includedir}/libavutil/detection_bbox.h
 %{_includedir}/libavutil/des.h
 %{_includedir}/libavutil/dict.h
 %{_includedir}/libavutil/display.h
 %{_includedir}/libavutil/dovi_meta.h
 %{_includedir}/libavutil/downmix_info.h
 %{_includedir}/libavutil/encryption_info.h
-%{_includedir}/libavutil/hwcontext_mediacodec.h
 %{_includedir}/libavutil/error.h
 %{_includedir}/libavutil/eval.h
 %{_includedir}/libavutil/ffversion.h
@@ -171,12 +176,14 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/%{name}/examples
 %{_includedir}/libavutil/frame.h
 %{_includedir}/libavutil/hash.h
 %{_includedir}/libavutil/hdr_dynamic_metadata.h
+%{_includedir}/libavutil/hdr_dynamic_vivid_metadata.h
 %{_includedir}/libavutil/hmac.h
 %{_includedir}/libavutil/hwcontext.h
 %{_includedir}/libavutil/hwcontext_cuda.h
 %{_includedir}/libavutil/hwcontext_d3d11va.h
 %{_includedir}/libavutil/hwcontext_drm.h
 %{_includedir}/libavutil/hwcontext_dxva2.h
+%{_includedir}/libavutil/hwcontext_mediacodec.h
 %{_includedir}/libavutil/hwcontext_opencl.h
 %{_includedir}/libavutil/hwcontext_qsv.h
 %{_includedir}/libavutil/hwcontext_vaapi.h
@@ -219,15 +226,18 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/%{name}/examples
 %{_includedir}/libavutil/tree.h
 %{_includedir}/libavutil/twofish.h
 %{_includedir}/libavutil/tx.h
+%{_includedir}/libavutil/uuid.h
 %{_includedir}/libavutil/version.h
 %{_includedir}/libavutil/video_enc_params.h
 %{_includedir}/libavutil/xtea.h
 %dir %{_includedir}/libswresample
 %{_includedir}/libswresample/swresample.h
 %{_includedir}/libswresample/version.h
+%{_includedir}/libswresample/version_major.h
 %dir %{_includedir}/libswscale
 %{_includedir}/libswscale/swscale.h
 %{_includedir}/libswscale/version.h
+%{_includedir}/libswscale/version_major.h
 
 %files tools
 %defattr(-,root,root)

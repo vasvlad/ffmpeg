@@ -1,5 +1,6 @@
 ## module name # reason for enablement in ffmpeg (usually there is another package that already got legal review)
 aac
+ac3
 alac # apple OSS - apache license
 apng # libpng
 ass # trivial
@@ -10,26 +11,29 @@ ffvhuff # trivial+zlib
 flac # libFLAC
 gif # libpng
 huffyuv # trivial+zlib
+ilbc # ilbc
 jpegls
+jpeg2000
 libaom # libaom
 libaom_av1 # libaom
 libcodec2 # codec2
 libgsm # libgsm
+libilbc # ilbc
+libjxl # libjxl
+libmp3lame # lame
 libopenjpeg # openjpeg
 libopus # opus
 libschroedinger # schroedinger
 libspeex # speex
 libtheora # libtheora
 libvorbis # libvorbis
-libvpx_vp8
-libvpx_vp9
-libwebp
-libwebp_anim
+libvpx_vp8 # libvpx
+libvpx_vp9 # libvpx
+libwebp # libwebp
+libwebp_anim # libwebp
 mjpeg # mjpegtools
 mpeg1video
 mpeg2video
-mp2 # twolame
-mp2fixed # twolame
 opus # opus
 pam
 pbm # trivial
