@@ -1,5 +1,5 @@
 Name:           ffmpeg
-Version:        5.1.1
+Version:        5.1.2
 Release:        1
 Summary:        FFmpeg video encoding and decoding library
 Url:            http://ffmpeg.org/
