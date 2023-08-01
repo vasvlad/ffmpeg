@@ -6,6 +6,7 @@ Url:            http://ffmpeg.org/
 Source:         %{name}-%{version}.tar.bz2
 Source1:        enable_decoders
 Source2:        enable_encoders
+Patch0:         0001-backport-avcodec-x86-mathops-clip-constants-used-wit.patch
 License:        LGPLv2+
 BuildRequires:  pkgconfig(libopenjp2)
 BuildRequires:  pkgconfig(libpulse)
@@ -42,7 +43,7 @@ Conflicts:      libav-tools
 Development tools for FFmpeg - a complete, cross-platform solution to record, convert and stream audio and video.
 
 %prep
-%autosetup -n %{name}-%{version}/upstream
+%autosetup -p1 -n %{name}-%{version}/upstream
 
 %build
 
