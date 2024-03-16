@@ -1,12 +1,11 @@
 Name:           ffmpeg
-Version:        5.1.3
+Version:        5.1.4
 Release:        1
 Summary:        FFmpeg video encoding and decoding library
 Url:            http://ffmpeg.org/
 Source:         %{name}-%{version}.tar.bz2
 Source1:        enable_decoders
 Source2:        enable_encoders
-Patch0:         0001-backport-avcodec-x86-mathops-clip-constants-used-wit.patch
 License:        LGPLv2+
 BuildRequires:  pkgconfig(fontconfig)
 BuildRequires:  pkgconfig(freetype2)
