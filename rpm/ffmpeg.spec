@@ -1,5 +1,5 @@
 Name:           ffmpeg
-Version:        5.1.4
+Version:        5.1.6
 Release:        1
 Summary:        FFmpeg video encoding and decoding library
 Url:            http://ffmpeg.org/
@@ -71,7 +71,6 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/%{name}/examples
 %postun -p /sbin/ldconfig
 
 %files
-%defattr(-,root,root)
 %license COPYING.LGPLv2.1
 %dir %{_datadir}/ffmpeg
 %{_datadir}/ffmpeg/*.ffpreset
@@ -85,7 +84,6 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/%{name}/examples
 %{_libdir}/libswscale.so.*
 
 %files devel
-%defattr(-,root,root)
 %{_libdir}/libavcodec.so
 %{_libdir}/libavdevice.so
 %{_libdir}/libavfilter.so
@@ -243,6 +241,5 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/%{name}/examples
 %{_includedir}/libswscale/version_major.h
 
 %files tools
-%defattr(-,root,root)
 %{_bindir}/ffmpeg
 %{_bindir}/ffprobe
