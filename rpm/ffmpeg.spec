@@ -1,3 +1,4 @@
+%define keepstatic 1
 Name:           ffmpeg
 Version:        5.1.6
 Release:        1
@@ -18,6 +19,7 @@ BuildRequires:  pkgconfig(theora)
 BuildRequires:  pkgconfig(vorbis)
 BuildRequires:  pkgconfig(vpx)
 BuildRequires:  pkgconfig(zlib)
+BuildRequires:  pkgconfig(sdl2)
 Conflicts:      libav
 %ifarch %{ix86} x86_64
 BuildRequires:  yasm
@@ -34,6 +36,14 @@ Conflicts:      libav-devel
 
 %description devel
 Development headers and libraries for FFmpeg - a complete, cross-platform solution to record, convert and stream audio and video.
+
+%package devel-static
+Summary:        FFmpeg development package
+Conflicts:      libav-devel
+
+%description devel-static
+Development headers and libraries for FFmpeg - a complete, cross-platform solution to record, convert and stream audio and video.
+
 
 %package tools
 Summary:        FFmpeg tools package
@@ -52,7 +62,9 @@ Development tools for FFmpeg - a complete, cross-platform solution to record, co
 sed -i 's/sed -E/sed -r/g' ./configure
 
 ./configure --prefix=/usr --libdir=%{_libdir} --disable-debug --enable-shared --enable-pic \
-  --disable-static --disable-doc --enable-muxers --enable-demuxers --enable-protocols \
+  --enable-static --disable-doc --enable-muxers --enable-demuxers --enable-protocols \
+  --pkg-config-flags='--static' \
+  --enable-openssl \
   --disable-indevs --disable-outdevs --disable-bsfs --enable-network --disable-hwaccels \
   --enable-libfontconfig --enable-libfreetype --enable-libopenjpeg --enable-libopus --enable-libpulse --enable-libspeex \
   --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libwebp --disable-encoders --disable-decoders \
@@ -82,6 +94,9 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/%{name}/examples
 %{_libdir}/libavutil.so.*
 %{_libdir}/libswresample.so.*
 %{_libdir}/libswscale.so.*
+
+%files devel-static
+%{_libdir}/*.a
 
 %files devel
 %{_libdir}/libavcodec.so
@@ -242,4 +257,5 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/%{name}/examples
 
 %files tools
 %{_bindir}/ffmpeg
+%{_bindir}/ffplay
 %{_bindir}/ffprobe
