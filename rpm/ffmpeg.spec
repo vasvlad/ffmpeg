@@ -61,7 +61,7 @@ Development tools for FFmpeg - a complete, cross-platform solution to record, co
 # We have an older sed that doesn't recognize the new -E switch. Use the old one
 sed -i 's/sed -E/sed -r/g' ./configure
 
-./configure --prefix=/usr --libdir=%{_libdir} --disable-debug --enable-shared --enable-pic \
+./configure --prefix=/usr --libdir=%{_libdir} --disable-debug --disable-shared --enable-pic \
   --enable-static --disable-doc --enable-muxers --enable-demuxers --enable-protocols \
   --pkg-config-flags='--static' \
   --enable-openssl \
@@ -87,25 +87,25 @@ rm -rf $RPM_BUILD_ROOT/%{_datadir}/%{name}/examples
 %dir %{_datadir}/ffmpeg
 %{_datadir}/ffmpeg/*.ffpreset
 %{_datadir}/ffmpeg/ffprobe.xsd
-%{_libdir}/libavcodec.so.*
-%{_libdir}/libavdevice.so.*
-%{_libdir}/libavfilter.so.*
-%{_libdir}/libavformat.so.*
-%{_libdir}/libavutil.so.*
-%{_libdir}/libswresample.so.*
-%{_libdir}/libswscale.so.*
+#%{_libdir}/libavcodec.so.*
+#%{_libdir}/libavdevice.so.*
+#%{_libdir}/libavfilter.so.*
+#%{_libdir}/libavformat.so.*
+#%{_libdir}/libavutil.so.*
+#%{_libdir}/libswresample.so.*
+#%{_libdir}/libswscale.so.*
 
 %files devel-static
 %{_libdir}/*.a
 
 %files devel
-%{_libdir}/libavcodec.so
-%{_libdir}/libavdevice.so
-%{_libdir}/libavfilter.so
-%{_libdir}/libavformat.so
-%{_libdir}/libavutil.so
-%{_libdir}/libswresample.so
-%{_libdir}/libswscale.so
+#%{_libdir}/libavcodec.so
+#%{_libdir}/libavdevice.so
+#%{_libdir}/libavfilter.so
+#%{_libdir}/libavformat.so
+#%{_libdir}/libavutil.so
+#%{_libdir}/libswresample.so
+#%{_libdir}/libswscale.so
 %{_libdir}/pkgconfig/libavcodec.pc
 %{_libdir}/pkgconfig/libavdevice.pc
 %{_libdir}/pkgconfig/libavfilter.pc
